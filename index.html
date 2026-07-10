@@ -52,6 +52,19 @@
             margin-bottom: 8px;
         }
 
+        /* Audio Player Styling */
+        .audio-container {
+            margin: 20px 0;
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #bfdbfe;
+        }
+
+        audio {
+            width: 100%;
+        }
+
         .directions {
             font-size: 0.95rem;
             color: var(--text-light);
@@ -143,12 +156,6 @@
             background: var(--primary-hover);
         }
 
-        .btn:disabled {
-            background: var(--border);
-            color: var(--text-light);
-            cursor: not-allowed;
-        }
-
         .feedback-box {
             margin-top: 15px;
             padding: 16px;
@@ -225,8 +232,17 @@
     <header>
         <h1>TOEFL ITP Skill Booster</h1>
         <p>Practice Set 1: Short Conversations</p>
+        
+        <!-- Native Audio Component Insertion -->
+        <div class="audio-container">
+            <p style="font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; color: var(--primary);">🎧 Practice Set Audio Tracks:</p>
+            <audio controls src="Practice Set 1.mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
         <div class="directions">
-            <strong>Directions:</strong> Read the choices below while listening to your audio materials. Select the best response for each item, validate your feedback, and prepare your final performance analysis.
+            <strong>Directions:</strong> Press Play on the audio bar above, then look at the choices below. Select the best response for each item, validate your feedback, and prepare your final performance analysis.
         </div>
     </header>
 
@@ -312,7 +328,7 @@
             options: [
                 { text: "(A) He is probably nearby.", key: "A" },
                 { text: "(B) He should pick up his things.", key: "B" },
-                { text: "(C) He broke his racket.", key: "D" },
+                { text: "(C) He broke his racket.", key: "C" },
                 { text: "(D) He might be playing tennis right now.", key: "D" }
             ],
             correct: "A",
@@ -397,7 +413,6 @@
     });
 
     function selectOption(qId, key) {
-        // Manage active selected UI styles prior to full lock
         const activeLabels = document.querySelectorAll(`[id^="label-${qId}-"]`);
         activeLabels.forEach(l => l.classList.remove('selected'));
         document.getElementById(`label-${qId}-${key}`).classList.add('selected');
@@ -416,17 +431,14 @@
             return;
         }
 
-        // Lock fields and render direct item metrics
         questionsData.forEach(q => {
             const selectedInput = document.querySelector(`input[name="q-${q.id}"]:checked`);
             const userAns = selectedInput.value;
             const fbBox = document.getElementById(`fb-${q.id}`);
             const ackSec = document.getElementById('ack-sec-' + q.id);
 
-            // Disable all radio inputs
             document.querySelectorAll(`input[name="q-${q.id}"]`).forEach(input => input.disabled = true);
 
-            // Style answers
             if (userAns === q.correct) {
                 document.getElementById(`label-${q.id}-${userAns}`).classList.add('correct');
                 fbBox.className = "feedback-box show correct-fb";
