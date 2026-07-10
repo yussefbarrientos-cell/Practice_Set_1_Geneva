@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOEFL ITP Listening Practice - Set 1</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #16a34a;
+            --error: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .directions {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            text-align: left;
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin-top: 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            transition: transform 0.2s;
+        }
+
+        .q-header {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            display: block;
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: #f1f5f9;
+            border-color: var(--text-light);
+        }
+
+        .option-item input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary);
+            background-color: #eff6ff;
+        }
+
+        .option-item.correct {
+            border-color: var(--success);
+            background-color: #f0fdf4;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            border-color: var(--error);
+            background-color: #fef2f2;
+            color: var(--error);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn:disabled {
+            background: var(--border);
+            color: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .feedback-box {
+            margin-top: 15px;
+            padding: 16px;
+            border-radius: 8px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .feedback-box.show {
+            display: block;
+        }
+
+        .feedback-box.correct-fb {
+            background: #dcfce7;
+            border-left: 4px solid var(--success);
+            color: #14532d;
+        }
+
+        .feedback-box.incorrect-fb {
+            background: #fee2e2;
+            border-left: 4px solid var(--error);
+            color: #7f1d1d;
+        }
+
+        .ack-section {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        #reflection-area {
+            display: none;
+            background: #fff;
+            border: 2px solid var(--primary);
+        }
+
+        #reflection-area textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-top: 10px;
+            resize: vertical;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .card { padding: 16px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>TOEFL ITP Skill Booster</h1>
+        <p>Practice Set 1: Short Conversations</p>
+        <div class="directions">
+            <strong>Directions:</strong> Read the choices below while listening to your audio materials. Select the best response for each item, validate your feedback, and prepare your final performance analysis.
+        </div>
+    </header>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress"></div>
+    </div>
+
+    <form id="quiz-form">
+        <div id="questions-container"></div>
+        <button type="button" id="submit-all-btn" class="btn" style="margin-top: 20px;">Submit All Answers</button>
+    </form>
+
+    <!-- Reflection Space Component -->
+    <div id="reflection-area" class="card">
+        <h2 style="color: var(--primary); margin-bottom: 10px;">Performance & Accuracy Reflection</h2>
+        <p style="color: var(--text-light); font-size: 0.95rem;">
+            Now that you have reviewed the targets and scripts, write a professional reflection paragraph. Focus explicitly on your listening accuracy quirks, systemic traps you fell into (e.g., matching sound traps, negatives), and actionable strategies for your next attempt.
+        </p>
+        <textarea id="reflection-text" placeholder="Type your diagnostic reflection paragraph here..."></textarea>
+        <button type="button" id="save-reflection" class="btn" style="background: var(--success);">Complete Session</button>
+    </div>
+</div>
+
+<script>
+    const questionsData = [
+        {
+            id: 1,
+            options: [
+                { text: "(A) A two-bedroom apartment may be too expensive.", key: "A" },
+                { text: "(B) The woman should not move off campus.", key: "B" },
+                { text: "(C) The woman should pay the rent by check.", key: "C" },
+                { text: "(D) The university has a list of rental properties.", key: "D" }
+            ],
+            correct: "D",
+            context: "The man asks if she checked 'off-campus listings at the housing office,' directly pointing out that the school keeps property information."
+        },
+        {
+            id: 2,
+            options: [
+                { text: "(A) Talk to Dr. Boyd about an assignment", key: "A" },
+                { text: "(B) Return their books to the library", key: "B" },
+                { text: "(C) Meet Dr. Boyd at the library", key: "C" },
+                { text: "(D) Make an appointment with their teacher on Friday", key: "D" }
+            ],
+            correct: "A",
+            context: "The woman states she is stuck and says, 'Maybe Dr. Boyd will have some suggestions,' implying they will approach the professor for help."
+        },
+        {
+            id: 3,
+            options: [
+                { text: "(A) The transportation for the trip is free.", key: "A" },
+                { text: "(B) The class did not enjoy going on the field trip.", key: "B" },
+                { text: "(C) Some people may not go on the trip.", key: "C" },
+                { text: "(D) Everyone in the class has paid the fee.", key: "D" }
+            ],
+            correct: "C",
+            context: "The woman rejects the idea that the 'whole class' is going because 'not everyone has paid the transportation fee.'"
+        },
+        {
+            id: 4,
+            options: [
+                { text: "(A) The woman should avoid getting cold.", key: "A" },
+                { text: "(B) It is easy to get sick in cold weather.", key: "B" },
+                { text: "(C) The speaker should get more rest.", key: "C" },
+                { text: "(D) Dressing warmly can prevent illness.", key: "D" }
+            ],
+            correct: "C",
+            context: "The woman responds that 'taking it easy' is the only approach that effectively fights off a cold, which equates to resting."
+        },
+        {
+            id: 5,
+            options: [
+                { text: "(A) The woman should get another job.", key: "A" },
+                { text: "(B) He will not have to wait much longer.", key: "B" },
+                { text: "(C) The woman was mistaken.", key: "C" },
+                { text: "(D) He was waiting in the wrong place.", key: "D" }
+            ],
+            correct: "C",
+            context: "The man says, 'You must be thinking of someone else,' meaning the news or assumption she had was incorrect."
+        },
+        {
+            id: 6,
+            options: [
+                { text: "(A) He is probably nearby.", key: "A" },
+                { text: "(B) He should pick up his things.", key: "B" },
+                { text: "(C) He broke his racket.", key: "D" },
+                { text: "(D) He might be playing tennis right now.", key: "D" }
+            ],
+            correct: "A",
+            context: "The woman highlights that his racket is still sitting on the table, implying he hasn't left for the courts and must be close by."
+        },
+        {
+            id: 7,
+            options: [
+                { text: "(A) Watch the clock carefully during the final exam", key: "A" },
+                { text: "(B) Pick up their papers on the twelfth", key: "B" },
+                { text: "(C) Finish their assignment early", key: "C" },
+                { text: "(D) Discuss their topics after class", key: "D" }
+            ],
+            correct: "C",
+            context: "The professor specifically warned students 'not to wait until the last minute to hand it in,' encouraging early completion."
+        },
+        {
+            id: 8,
+            options: [
+                { text: "(A) She was not able to organize it.", key: "A" },
+                { text: "(B) Its location has been changed.", key: "B" },
+                { text: "(C) It has been rescheduled.", key: "C" },
+                { text: "(D) She does not know anything about it.", key: "D" }
+            ],
+            correct: "A",
+            context: "The idiom 'never really got off the ground' signifies that the plans or organization phase failed to progress or start."
+        },
+        {
+            id: 9,
+            options: [
+                { text: "(A) The man is mistaken.", key: "A" },
+                { text: "(B) The error will be corrected.", key: "B" },
+                { text: "(C) She did not know about the problem.", key: "C" },
+                { text: "(D) Grades were sent late.", key: "D" }
+            ],
+            correct: "B",
+            context: "She acknowledges the bug in the system and explicitly points out it 'should be straightened out by next week.'"
+        },
+        {
+            id: 10,
+            options: [
+                { text: "(A) Stay home and prepare for his exams", key: "A" },
+                { text: "(B) Attend the concert after his exams", key: "B" },
+                { text: "(C) Ask the woman to study with him", key: "C" },
+                { text: "(D) Go to the concert with the woman", key: "D" }
+            ],
+            correct: "D",
+            context: "The man decides that 'maybe a break would do me good,' signaling an agreement to join her at the concert."
+        }
+    ];
+
+    const container = document.getElementById('questions-container');
+
+    // Build Quiz UI
+    questionsData.forEach((q) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.id = `card-${q.id}`;
+
+        let optionsHTML = '';
+        q.options.forEach(opt => {
+            optionsHTML += `
+                <label class="option-item" id="label-${q.id}-${opt.key}">
+                    <input type="radio" name="q-${q.id}" value="${opt.key}" onclick="selectOption(${q.id}, '${opt.key}')">
+                    ${opt.text}
+                </label>
+            `;
+        });
+
+        card.innerHTML = `
+            <div class="q-header">
+                <span>Question ${q.id}</span>
+            </div>
+            <div class="options-list">${optionsHTML}</div>
+            <div class="feedback-box" id="fb-${q.id}"></div>
+            <div class="ack-section" id="ack-sec-${q.id}" style="display:none;">
+                <input type="checkbox" id="ack-${q.id}" onchange="checkAllAcknowledgments()">
+                <label for="ack-${q.id}">I have reviewed and understood this specific structural breakdown.</label>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+
+    function selectOption(qId, key) {
+        // Manage active selected UI styles prior to full lock
+        const activeLabels = document.querySelectorAll(`[id^="label-${qId}-"]`);
+        activeLabels.forEach(l => l.classList.remove('selected'));
+        document.getElementById(`label-${qId}-${key}`).classList.add('selected');
+    }
+
+    document.getElementById('submit-all-btn').addEventListener('click', () => {
+        let totalAnswered = 0;
+        
+        questionsData.forEach(q => {
+            const selected = document.querySelector(`input[name="q-${q.id}"]:checked`);
+            if (selected) totalAnswered++;
+        });
+
+        if (totalAnswered < questionsData.length) {
+            alert(`Please complete all ${questionsData.length} items prior to viewing targeted feedback logs.`);
+            return;
+        }
+
+        // Lock fields and render direct item metrics
+        questionsData.forEach(q => {
+            const selectedInput = document.querySelector(`input[name="q-${q.id}"]:checked`);
+            const userAns = selectedInput.value;
+            const fbBox = document.getElementById(`fb-${q.id}`);
+            const ackSec = document.getElementById('ack-sec-' + q.id);
+
+            // Disable all radio inputs
+            document.querySelectorAll(`input[name="q-${q.id}"]`).forEach(input => input.disabled = true);
+
+            // Style answers
+            if (userAns === q.correct) {
+                document.getElementById(`label-${q.id}-${userAns}`).classList.add('correct');
+                fbBox.className = "feedback-box show correct-fb";
+                fbBox.innerHTML = `<strong>Correct!</strong> ${q.context}`;
+            } else {
+                document.getElementById(`label-${q.id}-${userAns}`).classList.add('incorrect');
+                document.getElementById(`label-${q.id}-${q.correct}`).classList.add('correct');
+                fbBox.className = "feedback-box show incorrect-fb";
+                fbBox.innerHTML = `<strong>Incorrect.</strong> Your choice: (${userAns}) | Correct target: (${q.correct}). <br>${q.context}`;
+            }
+            
+            ackSec.style.display = "flex";
+        });
+
+        document.getElementById('submit-all-btn').style.display = "none";
+        document.getElementById('progress').style.width = "50%";
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    function checkAllAcknowledgments() {
+        const total = questionsData.length;
+        let checkedCount = 0;
+
+        questionsData.forEach(q => {
+            if (document.getElementById(`ack-${q.id}`).checked) {
+                checkedCount++;
+            }
+        });
+
+        if (checkedCount === total) {
+            document.getElementById('progress').style.width = "100%";
+            const refArea = document.getElementById('reflection-area');
+            refArea.style.display = "block";
+            refArea.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    document.getElementById('save-reflection').addEventListener('click', () => {
+        const text = document.getElementById('reflection-text').value.trim();
+        if (text.length < 30) {
+            alert("Please compose a comprehensive reflection paragraph to solidify your understanding before exiting.");
+            return;
+        }
+        alert("Session saved successfully! Submit this screen or paste your text into your class learning management portal.");
+    });
+</script>
+
+</body>
+</html>
